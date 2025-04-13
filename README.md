@@ -21,89 +21,87 @@ aiohttp
 📦 Установка
 Убедитесь, что у вас установлен Python 3.8+
 
-Установите зависимости:
+# Установите зависимости:
 
-pip install aiohttp rsa yarl
+    pip install aiohttp rsa yarl
 
 ⚙️ Настройка
 
 Создайте файл account.ini в корне проекта:
 
 
-[Account]
+# [Account]
 
-API_KEY = your_steam_api_key
-
-username = your_steam_login
-
-password = your_steam_password
-
-path_secret_maFile = path_to_maFile.json
+ API_KEY = your_steam_api_key
+ 
+ username = your_steam_login
+ 
+ password = your_steam_password
+ 
+ path_secret_maFile = path_to_maFile.json
 
 🛠 Пример использования
 
-Базовая авторизация
+# Базовая авторизация
 
-from auth_steam import AuthSteam
-import asyncio
+    from auth_steam import AuthSteam
+    import asyncio
 
-async def main():
-    async with AuthSteam() as auth:
-        # Авторизация с логином/паролем
-        session = await auth.login()
+    async def main():
+    
+        async with AuthSteam() as auth:
         
-        # Получение баланса
-        balance = await auth.get_steam_balance()
-        print(f"Баланс: {balance}₽")
+            session = await auth.login()  
+            
+            balance = await auth.get_steam_balance()
+            
+            print(f"Баланс: {balance}₽")  
+            
+            await auth.save_cookies()
+            
+    asyncio.run(main())
+
+# Использование сохраненной сессии
+    async def main():
+    
+        async with AuthSteam() as auth:
         
-        # Сохранение сессии
-        await auth.save_cookies()
-
-asyncio.run(main())
-
-Использование сохраненной сессии
-
-async def main():
-    async with AuthSteam() as auth:
-        # Загрузка куков
-        await auth.load_cookies()
-        
-        # Проверка баланса
-        balance = await auth.get_steam_balance()
-        print(f"Текущий баланс: {balance}₽")
+            await auth.load_cookies()    
+            
+            balance = await auth.get_steam_balance()
+            
+            print(f"Текущий баланс: {balance}₽")
 
 
 🔧 Методы API
-Основные методы
-login() - Полная авторизация через Steam
-
-load_cookies() - Загрузка сессии из файла
-
-save_cookies() - Сохранение текущей сессии
-
-get_steam_balance() - Получение баланса кошелька
-
-Расширенные настройки
+# Основные методы
+    login() - Полная авторизация через Steam
+    
+    load_cookies() - Загрузка сессии из файла
+    
+    save_cookies() - Сохранение текущей сессии
+    
+    get_steam_balance() - Получение баланса кошелька
 
 # Кастомный путь для куков
-await auth.save_cookies('./custom_cookies.json')
+    await auth.save_cookies('./custom_cookies.json')
 
 # Получение "замороженного" баланса
-await auth.get_steam_balance(on_hold=True)
+    await auth.get_steam_balance(on_hold=True)
 
 
 🛑 Важно!
 
 🔐 Никогда не коммитьте файлы account.ini и *.json с секретными данными
 
-⚠️ Используйте виртуальное окружение для изоляции зависимостей
-
 🔄 Регулярно обновляйте куки-файлы (раз в 1 дней)
 
 📄 Лицензия
+
 MIT License. Подробнее в файле LICENSE.
 
 Совместимость: Python 3.8+, Windows/Linux/macOS
-Поддержка: Сообщить о проблеме
-Автор: Ваше имя
+
+Автор: Alexander Knyazev Penza
+
 Версия: 1.0.0
