@@ -25,34 +25,6 @@ async def get_steam_balance(session, convert_to_decimal: bool = True, on_hold: b
         return balance_dict[balance_dict_key]
 
 
-# async def save_cookies(session):
-#     cookies = []
-#     for cookie in session.cookie_jar:
-#         cookies.append({
-#             'key': cookie.key,
-#             'value': cookie.value,
-#             'domain': cookie['domain'],
-#             'path': cookie['path'],
-#             'expires': cookie['expires'],
-#             'secure': cookie['secure'],
-#             'httponly': cookie['httponly']
-#         })
-#     async with aiofiles.open('./cookies.json', 'w') as f:
-#         await f.write(json.dumps(cookies))
-#
-#
-# async def load_cookies(session):
-#     try:
-#         async with aiofiles.open('./cookies.json', 'r') as f:
-#             content = await f.read()
-#             cookies = json.loads(content)
-#             for cookie_data in cookies:
-#                 session.cookie_jar.update_cookies({cookie_data['key']: cookie_data['value']},
-#                                                   domain=cookie_data['domain'])
-#     except FileNotFoundError:
-#         print("Cookie file not found. Proceeding without cookies.")
-
-
 async def main():
     async with AuthSteam() as auth:
         # session = await auth.login()
